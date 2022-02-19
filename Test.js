@@ -13,6 +13,10 @@ const ctx = canvas.getContext('2d');
 canvas.width = innerWidth-20;
 canvas.height = innerHeight-20;
 
+const scale = canvas.height/1080;
+
+console.log(scale);
+
 ctx.beginPath();
 ctx.rect(0, 0, innerWidth-20, innerHeight-20);
 ctx.fillStyle = "white";
@@ -51,12 +55,12 @@ class wall {
 class flashlight {
     //set intitial variables
     constructor(x,y,angle,beams) {
-        this.posX = x;
-        this.posY = y;
+        this.posX = x * scale;
+        this.posY = y * scale;
         this.angle = angle;
         this.beams = beams;
-        this.height = 100;
-        this.width = 100;
+        this.height = 100 * scale;
+        this.width = 100 * scale;
     }
 
     //draws the beams and the flashlight head
@@ -100,7 +104,7 @@ class flashlight {
             
             //draw a line that distance in the forward direction
             ctx.strokeStyle = "#F2D800";
-            ctx.lineWidth = 3;
+            ctx.lineWidth = 3 * scale;
  
             ctx.beginPath();
 
@@ -118,7 +122,7 @@ class flashlight {
             y = y - shiftY;
             
             //find if the beam hit anything
-            if (smallest <= 5) {
+            if (smallest <= 1 * scale) {
                 //if yes calculate where it should go from there
                 exit = blocks[contact].hit(x,y,angle);
 
@@ -190,10 +194,10 @@ class vexLens { //lens class with position, width, angle, and focal length
     //position is from the center
     //set intitial variables
     constructor(x, y, width, focal, angle) {
-        this.len = focal;
-        this.posX = x;
-        this.posY = y;
-        this.width = width;
+        this.len = focal * scale;
+        this.posX = x * scale;
+        this.posY = y * scale;
+        this.width = width * scale;
         this.angle = angle;
         this.slope =  Math.sin(angle * Math.PI / 180) / Math.cos(angle * Math.PI / 180);
         this.b = y - (this.slope * x);
@@ -204,7 +208,7 @@ class vexLens { //lens class with position, width, angle, and focal length
     //draw the lens as a line
     draw() {
         ctx.strokeStyle = "#64AEEE";
-        ctx.lineWidth = 10;
+        ctx.lineWidth = 10 * scale;
         
         ctx.beginPath();
 
